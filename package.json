@@ -36,5 +36,7 @@
     "build": "tsc --project tsconfig.lib.json",
     "dev": "parcel test/index.html"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "name": "definitely-form",
+  "version": "0.0.1"
 }
