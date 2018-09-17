@@ -14,9 +14,8 @@ export type PropsType<
   stateManager: RxJSStateManager<FormSpec, ErrorValues>;
   children(props: {
     inputEventHandlers: EventHandlers<FormSpec>;
-    formState?: FormState<FormSpec>;
     errors?: ErrorValues | null;
-  }): React.ReactElement<any>;
+  } & FormState<FormSpec>): React.ReactElement<any>;
 };
 
 export type StateType<
@@ -40,7 +39,7 @@ export class ReactComponent<
   >
 > {
   subscription?: Subscription;
-  state = {};
+  state: StateType<FormSpec, ErrorValues> = {};
   componentDidMount() {
     // subscribe to stateManager.
     const {
@@ -84,10 +83,20 @@ export class ReactComponent<
       errors,
     } = this.state;
 
+    const {
+      touched = {},
+      active = null,
+      edited = {},
+      values = {},
+    } = formState || {} as FormState<FormSpec>;
+
     return this.props.children({
       inputEventHandlers,
-      formState,
+      touched,
+      active,
       errors,
+      edited,
+      values,
     });
   }
 }

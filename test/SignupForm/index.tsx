@@ -15,13 +15,10 @@ export const TestForm: React.StatelessComponent<PropsType> =
       >
         {({
           inputEventHandlers,
-          formState,
+          touched,
+          values,
           errors,
         }) => {
-          const {
-            touched = {},
-          } = formState || {};
-
           return (
             <div>
 
@@ -43,6 +40,7 @@ export const TestForm: React.StatelessComponent<PropsType> =
               >
                 {touched.name ? 'ok' : 'aa'}
               </p>
+              <p> {values.name} </p>
             </div>
           );
         }}

@@ -54,6 +54,7 @@
     "no-use-before-declare": false,
     "no-void-expression": false,
     "no-suspicious-comment": false,
+    "no-object-literal-type-assertion": false,
     "ter-indent": [
       true,
       2,
