@@ -16,12 +16,12 @@ export const formStateManager = createFormState(
     age: f<string, number>(Number),
   }),
 ).withRxjsManager<{
-  name: BaseUsernameError | null;
-  age: string | number;
+  name: BaseUsernameError | undefined | boolean;
+  age: string | number | null;
 }>({
   toStreamValidator(
     formStateStream,
-    eventStreams,
+    // eventStreams,
   ) {
     // const nameChangeStream = eventStreams
     //                           .changeStreams
@@ -29,10 +29,20 @@ export const formStateManager = createFormState(
 
     // nameChangeStream
     return formStateStream.pipe(
-      map(a => ({
-        name: new UsernameTooShort(),
-        age: '123',
-      })),
+      map(
+        formState => {
+          const {
+            values,
+          }  = formState;
+          const nameShort = (typeof values.name === 'string') &&
+                              values.name.length < 5;
+
+          return {
+            name: nameShort && new UsernameTooShort(),
+            age: null,
+          };
+        },
+      ),
     );
   },
 });

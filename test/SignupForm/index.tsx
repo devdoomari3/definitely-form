@@ -19,6 +19,8 @@ export const TestForm: React.StatelessComponent<PropsType> =
           values,
           errors,
         }) => {
+          console.log('errors', errors);
+
           return (
             <div>
 
@@ -38,7 +40,10 @@ export const TestForm: React.StatelessComponent<PropsType> =
                   color: 'red',
                 }}
               >
-                {touched.name ? 'ok' : 'aa'}
+                {touched.name ?
+                  errors && errors.name && errors.name.name
+                  : '-'
+                }
               </p>
               <p> {values.name} </p>
             </div>
