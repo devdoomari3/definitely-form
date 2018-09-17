@@ -11,18 +11,14 @@
     ],
     "declaration": true,
     "jsx": "react",
-    "rootDirs": [
-      "src",
-      "test",
-      "tools"
-    ],
+    "rootDir": "src",
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "outDir": "ts_compiled"
+    "outDir": "lib"
   },
   "exclude": [
     "node_modules",
@@ -33,6 +29,8 @@
     "tools",
     "vendors",
     "dist",
-    "lib"
+    "lib",
+    "test",
+    "tools"
   ]
 }

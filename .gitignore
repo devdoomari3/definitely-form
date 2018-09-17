@@ -2,3 +2,4 @@ node_modules
 ts_compiled
 .cache
 dist
+lib

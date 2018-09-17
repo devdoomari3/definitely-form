@@ -2,10 +2,10 @@ import * as React from 'react';
 import {
   render,
 } from 'react-dom';
-import { TestForm } from './SignupForm';
+import { SignupView } from './SignupForm';
 
 render(
-  <TestForm
+  <SignupView
   />,
   document.getElementById('app'),
 );

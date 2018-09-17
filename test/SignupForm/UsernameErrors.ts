@@ -1,11 +1,11 @@
 export abstract class BaseUsernameError extends Error {
-  abstract name: string;
+  abstract message: string;
 }
 
 export class UsernameTaken extends BaseUsernameError {
-  name = 'Username taken';
+  message = 'Username taken';
 }
 
 export class UsernameTooShort extends BaseUsernameError {
-  name = 'Username Too Short';
+  message = 'Username Too Short';
 }
