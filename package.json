@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "@types/lodash": "^4.14.116",
-    "@types/moment": "^2.13.0",
     "@types/ramda": "^0.25.38",
     "@types/react": "^16.4.13",
     "@types/react-dom": "^16.0.7",
@@ -13,8 +12,8 @@
     "parcel-bundler": "^1.9.7",
     "ramda": "^0.25.0",
     "rc-calendar": "^9.7.7",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
     "recompose": "^0.30.0",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.2",
@@ -23,6 +22,14 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-microsoft-contrib": "^5.2.1",
     "typescript": "^3.0.3"
+  },
+  "peerDependencies": {
+    "immer": "^1.6.0",
+    "ramda": "^0.25.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "rxjs": "^6.3.2",
+    "rxjs-compat": "^6.3.2"
   },
   "scripts": {
     "clean": "rimraf dist lib ts_compiled",
