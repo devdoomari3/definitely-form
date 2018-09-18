@@ -83,20 +83,17 @@ export class ReactComponent<
       errors,
     } = this.state;
 
-    const {
-      touched = {},
-      active = null,
-      edited = {},
-      values = {},
-    } = formState || {} as FormState<FormSpec>;
-
     return this.props.children({
       inputEventHandlers,
-      touched,
-      active,
       errors,
-      edited,
-      values,
+      ...formState,
+      ...{
+        touched: {},
+        active: {},
+        edited: {},
+        values: {},
+        parsedValues: {},
+      } as FormState<FormSpec>,
     });
   }
 }

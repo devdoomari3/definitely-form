@@ -1,5 +1,5 @@
 import {
-  FormData,
+  FormData, FormDataParsed,
 } from './types/FormData';
 import { FormSpecBase } from './types/FormSpecBase';
 
@@ -14,5 +14,6 @@ export type FormState<
     [key in keyof FormSpec]?: boolean;
   };
   values: Partial<FormData<FormSpec>>;
+  parsedValues: Partial<FormDataParsed<FormSpec>>;
   isInvalid?: boolean;
 };
