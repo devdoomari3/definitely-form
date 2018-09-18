@@ -25,6 +25,7 @@ export const SignupForm: React.StatelessComponent<PropsType> =
               <input
                 type='text'
                 {...inputEventHandlers.name}
+                value={values.name}
                 onChange={
                   (evt) => {
                     inputEventHandlers

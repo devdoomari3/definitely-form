@@ -58,6 +58,7 @@ export class RxJSStateManager <
       touched: {},
       edited: {},
       values: {},
+      parsedValues: {},
     });
     this.errorStream = args.toStreamValidator(
       this.formStateStream,
@@ -115,6 +116,8 @@ export class RxJSStateManager <
               const f = formState as FormState<FormSpec>;
               f.edited[fieldName] = true;
               f.values[fieldName] = value;
+              const parser = fieldsSpec[fieldName];
+              f.parsedValues[fieldName] = parser.parse && parser.parse(value);
             },
           ),
         );

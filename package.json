@@ -34,7 +34,7 @@
   "scripts": {
     "clean": "rimraf dist lib ts_compiled",
     "build": "tsc --project tsconfig.lib.json",
-    "dev": "parcel test/index.html"
+    "dev": "parcel examples/index.html"
   },
   "dependencies": {},
   "name": "definitely-form",
