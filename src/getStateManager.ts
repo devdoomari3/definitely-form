@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import {
   RxJSStateManager,
   StreamValidatorFactory,
@@ -18,20 +19,26 @@ export function createFormState<
   const fieldsSpec = getFields(createField);
   type fieldsSpec = typeof fieldsSpec;
 
-  function withRxjsManager<DerivedState>(args: {
-    toStreamValidator: StreamValidatorFactory<FormSpec, DerivedState>;
+  function withRxjsManager<
+    DerivedState, ExternalState = undefined,
+  >(args: {
+    externalStateStream?: Observable<ExternalState>;
+    toStreamValidator: StreamValidatorFactory<FormSpec, DerivedState, ExternalState>;
   }) {
     const {
       toStreamValidator,
+      externalStateStream = new Observable<ExternalState>(),
     } = args;
 
     return new RxJSStateManager<
       FormSpec,
-      DerivedState
+      DerivedState,
+      ExternalState
     >({
       initialValues,
       fieldsSpec,
       toStreamValidator,
+      externalStateStream,
     });
   }
 
