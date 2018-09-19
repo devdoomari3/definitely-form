@@ -32,7 +32,6 @@ export type StateType<
 export class ReactComponent<
   FormSpec extends FormSpecBase,
   DerivedState,
-  ExternalState = undefined,
 > extends React.Component<
   PropsType<
     FormSpec,
