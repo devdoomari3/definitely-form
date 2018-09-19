@@ -3,7 +3,7 @@
 // import { filter } from 'rxjs/operators/filter';
 import { map } from 'rxjs/operators/map';
 import {
-  createFormState,
+  createFieldsGroup,
 } from '../../src/getStateManager';
 import {
   BaseUsernameError,
@@ -11,12 +11,14 @@ import {
 } from './UsernameErrors';
 
 export function createFormStateManager() {
-  return createFormState(
+  const fieldsGroup = createFieldsGroup(
     f => ({
       name: f<string>(),
       age: f<string, number>(Number),
     }),
-  ).withRxjsManager<{
+  );
+
+  return fieldsGroup.withRxjsManager<{
     name: BaseUsernameError | null;
     age: string | number | null;
   }>({
