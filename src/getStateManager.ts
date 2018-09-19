@@ -10,7 +10,7 @@ import {
 import { FormSpecBase } from './types/FormSpecBase';
 import { GetFields } from './types/GetFields';
 
-export function createFormState<
+export function createFieldsGroup<
   FormSpec extends FormSpecBase,
 >(
   getFields: GetFields<FormSpec>,
@@ -44,5 +44,6 @@ export function createFormState<
 
   return {
     withRxjsManager,
+    fieldsSpec,
   };
 }
