@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { combineLatest } from 'rxjs/operators/combineLatest';
 import { Subscription } from 'rxjs/Subscription';
-import { FormState } from './FormState';
-import { RxJSStateManager } from './RxJSStateManager';
-import { EventHandlers } from './types/EventHandler';
-import { FormSpecBase } from './types/FormSpecBase';
+import { FormState } from '../FormState';
+import { RxJSStateManager } from '../RxJSStateManager';
+import { EventHandlers } from '../types/EventHandler';
+import { FormSpecBase } from '../types/FormSpecBase';
 
 export type PropsType<
   FormSpec extends FormSpecBase,
@@ -32,7 +32,6 @@ export type StateType<
 export class ReactComponent<
   FormSpec extends FormSpecBase,
   DerivedState,
-  ExternalState = undefined,
 > extends React.Component<
   PropsType<
     FormSpec,
