@@ -9,8 +9,13 @@ import { FormSpecBase } from './types/FormSpecBase';
 export type PropsType<
   FormSpec extends FormSpecBase,
   DerivedState,
+  ExternalState = undefined,
 > = {
-  stateManager: RxJSStateManager<FormSpec, DerivedState>;
+  stateManager: RxJSStateManager<
+    FormSpec,
+    DerivedState,
+    ExternalState
+  >;
   children(props: {
     inputEventHandlers: EventHandlers<FormSpec>;
     derivedState?: DerivedState | null;
@@ -27,6 +32,7 @@ export type StateType<
 export class ReactComponent<
   FormSpec extends FormSpecBase,
   DerivedState,
+  ExternalState = undefined,
 > extends React.Component<
   PropsType<
     FormSpec,

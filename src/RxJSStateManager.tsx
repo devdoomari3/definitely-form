@@ -16,15 +16,18 @@ import { mapObject } from './utils/ObjectMap';
 
 export type StreamValidatorFactory<
   FormSpec extends FormSpecBase,
-  DerivedState
+  DerivedState,
+  ExternalState,
 > = (
-  formState: Observable<FormState<FormSpec>>,
+  formStateStream: Observable<FormState<FormSpec>>,
   eventStreams: EventStreams<FormSpec>,
+  externalStateStream: Observable<ExternalState>,
 ) => Observable<DerivedState | null>;
 
 export class RxJSStateManager <
   FormSpec extends FormSpecBase,
-  DerivedState
+  DerivedState,
+  ExternalState,
 > {
   initialValues: Partial<FormData>;
   derivedState?: DerivedState;
@@ -41,11 +44,15 @@ export class RxJSStateManager <
   constructor(args: {
     initialValues?: Partial<FormData>;
     fieldsSpec: FormSpec;
-    toStreamValidator: StreamValidatorFactory<FormSpec, DerivedState>;
+    toStreamValidator:
+      StreamValidatorFactory<FormSpec, DerivedState, ExternalState>;
+    externalStateStream: Observable<ExternalState>;
   }) {
     const {
       initialValues,
       fieldsSpec,
+      externalStateStream,
+      toStreamValidator,
     } = args;
     this.eventStreams = createEventStreams(fieldsSpec);
     this.formStateStream = new BehaviorSubject<FormState<FormSpec>>({
@@ -55,9 +62,10 @@ export class RxJSStateManager <
       values: {},
       parsedValues: {},
     });
-    this.derivedStateStream = args.toStreamValidator(
+    this.derivedStateStream = toStreamValidator(
       this.formStateStream,
       this.eventStreams,
+      externalStateStream,
     );
     this.initialValues = initialValues || {};
     this.fieldsSpec = fieldsSpec;
