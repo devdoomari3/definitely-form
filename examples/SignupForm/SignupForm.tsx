@@ -15,17 +15,15 @@ export const SignupForm: React.StatelessComponent<PropsType> =
           inputEventHandlers,
           touched,
           values,
-          errors,
+          derivedState,
         }) => {
-          console.log('errors', errors);
-
           return (
             <div>
 
               <input
                 type='text'
                 {...inputEventHandlers.name}
-                value={values.name}
+                value={values.name || ''}
                 onChange={
                   (evt) => {
                     inputEventHandlers
@@ -40,8 +38,18 @@ export const SignupForm: React.StatelessComponent<PropsType> =
                 }}
               >
                 {touched.name ?
-                  errors && errors.name && errors.name.message
+                  derivedState && derivedState.name && derivedState.name.message
                   : '-'
+                }
+              </p>
+              <p
+                style={{
+                  color: 'purple',
+                }}
+              >
+                {
+                  derivedState && derivedState.name && derivedState.name.message
+
                 }
               </p>
               <p> {values.name} </p>

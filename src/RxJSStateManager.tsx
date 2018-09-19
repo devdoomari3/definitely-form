@@ -7,10 +7,6 @@ import {
 } from './EventStreams';
 import { FormState } from './FormState';
 import {
-  BaseErrorValuesType,
-  DefaultErrorValuesType,
-} from './types/ErrorValueType';
-import {
   EventHandler,
   EventHandlers,
 } from './types/EventHandler';
@@ -20,33 +16,32 @@ import { mapObject } from './utils/ObjectMap';
 
 export type StreamValidatorFactory<
   FormSpec extends FormSpecBase,
-  ErrorValues extends BaseErrorValuesType<FormSpec>
+  DerivedState
 > = (
   formState: Observable<FormState<FormSpec>>,
   eventStreams: EventStreams<FormSpec>,
-) => Observable<ErrorValues | null>;
+) => Observable<DerivedState | null>;
 
 export class RxJSStateManager <
   FormSpec extends FormSpecBase,
-  ErrorValues extends BaseErrorValuesType<FormSpec>
-    = DefaultErrorValuesType<FormSpec>
+  DerivedState
 > {
   initialValues: Partial<FormData>;
-  errors?: ErrorValues;
+  derivedState?: DerivedState;
 
   fieldsSpec: FormSpec;
 
   inputEventHandlers: EventHandlers<FormSpec>;
 
   eventStreams: EventStreams<FormSpec>;
-  errorStream: Observable<ErrorValues | null>;
+  derivedStateStream: Observable<DerivedState | null>;
   // values?: {[key in keyof FormSpec]: ValueProperty<FormSpec[key] > };
   formStateStream: BehaviorSubject<FormState<FormSpec>>;
 
   constructor(args: {
     initialValues?: Partial<FormData>;
     fieldsSpec: FormSpec;
-    toStreamValidator: StreamValidatorFactory<FormSpec, ErrorValues>;
+    toStreamValidator: StreamValidatorFactory<FormSpec, DerivedState>;
   }) {
     const {
       initialValues,
@@ -60,7 +55,7 @@ export class RxJSStateManager <
       values: {},
       parsedValues: {},
     });
-    this.errorStream = args.toStreamValidator(
+    this.derivedStateStream = args.toStreamValidator(
       this.formStateStream,
       this.eventStreams,
     );

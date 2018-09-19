@@ -4,10 +4,6 @@ import {
 } from './RxJSStateManager';
 import { createField } from './types/CreateField';
 import {
-  BaseErrorValuesType,
-  DefaultErrorValuesType,
-} from './types/ErrorValueType';
-import {
   FormData,
 } from './types/FormData';
 import { FormSpecBase } from './types/FormSpecBase';
@@ -20,12 +16,10 @@ export function createFormState<
   initialValues?: FormData<FormSpec>,
 ) {
   const fieldsSpec = getFields(createField);
+  type fieldsSpec = typeof fieldsSpec;
 
-  function withRxjsManager<
-    ErrorValues extends BaseErrorValuesType<FormSpec>
-      = DefaultErrorValuesType<FormSpec>
-  >(args: {
-    toStreamValidator: StreamValidatorFactory<FormSpec, ErrorValues>;
+  function withRxjsManager<DerivedState>(args: {
+    toStreamValidator: StreamValidatorFactory<FormSpec, DerivedState>;
   }) {
     const {
       toStreamValidator,
@@ -33,7 +27,7 @@ export function createFormState<
 
     return new RxJSStateManager<
       FormSpec,
-      ErrorValues
+      DerivedState
     >({
       initialValues,
       fieldsSpec,
