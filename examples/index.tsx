@@ -3,9 +3,15 @@ import {
   render,
 } from 'react-dom';
 import { SignupView } from './SignupForm';
+import { TestPropsToStream } from './TestReact/TestPropsToStream';
 
 render(
-  <SignupView
-  />,
+  <div>
+    <p> SignUp View </p>
+    <SignupView
+    />
+    <p> Test Props to Stream </p>
+    <TestPropsToStream />
+  </div>,
   document.getElementById('app'),
 );

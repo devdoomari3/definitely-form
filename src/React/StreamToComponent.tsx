@@ -10,6 +10,8 @@ export type StateType<T> = {
   value?: T;
 };
 export class StreamToComponent<T> extends React.Component<PropsType<T>, StateType<T>> {
+  state: StateType<T> = {
+  };
   subscription?: Subscription;
   componentDidMount() {
     this.subscribe();
@@ -24,7 +26,11 @@ export class StreamToComponent<T> extends React.Component<PropsType<T>, StateTyp
     this.unsubscribe();
   }
   render() {
-    return this.props.children(this.state.value);
+    const {
+      value,
+    } = this.state;
+
+    return value ? this.props.children(value) : null;
   }
   private subscribe() {
     this.subscription = this.props.stream
