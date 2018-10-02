@@ -14,6 +14,7 @@ export const SignupView: React.StatelessComponent<{}> = props => {
       <SignupForm stateManager={formStateManager} />
       <button onClick={() => {
         console.log(formStateManager.formStateStream.value);
+        console.log(formStateManager.derivedState);
       }}>
         log!
       </button>
