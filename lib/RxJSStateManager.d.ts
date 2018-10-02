@@ -7,7 +7,7 @@ import { FormSpecBase } from './types/FormSpecBase';
 export declare type StreamValidatorFactory<FormSpec extends FormSpecBase, DerivedState, ExternalState> = (formStateStream: Observable<FormState<FormSpec>>, eventStreams: EventStreams<FormSpec>, externalStateStream: Observable<ExternalState>) => Observable<DerivedState | null>;
 export declare class RxJSStateManager<FormSpec extends FormSpecBase, DerivedState, ExternalState> {
     initialValues: Partial<FormData>;
-    derivedState?: DerivedState;
+    derivedState?: DerivedState | null;
     fieldsSpec: FormSpec;
     inputEventHandlers: EventHandlers<FormSpec>;
     eventStreams: EventStreams<FormSpec>;
