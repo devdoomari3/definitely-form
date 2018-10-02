@@ -3,3 +3,4 @@ ts_compiled
 .cache
 dist
 lib
+docs
