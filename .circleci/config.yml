@@ -60,7 +60,7 @@ jobs:
       - run:
           name: pull-merge-build-forcepush
           command: |
-            git checkout -b master | git checkout master
+            git checkout master
             ./.circleci/pullAndMerge.sh
             git push --set-upstream origin master --force --follow-tags
 
