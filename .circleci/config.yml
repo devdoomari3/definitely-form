@@ -3,7 +3,6 @@ user.name: devdoomari-circlei
 jobs:
   push_dist:
     docker:
-      - image:
       - image: circleci/node:8-browsers
     steps:
       - checkout
