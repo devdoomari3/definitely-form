@@ -1,6 +1,7 @@
 import immer from 'immer';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { tap } from 'rxjs/operators/tap';
 import {
   createEventStreams,
   EventStreams,
@@ -30,7 +31,7 @@ export class RxJSStateManager <
   ExternalState,
 > {
   initialValues: Partial<FormData>;
-  derivedState?: DerivedState;
+  derivedState?: DerivedState | null;
 
   fieldsSpec: FormSpec;
 
@@ -66,7 +67,10 @@ export class RxJSStateManager <
       this.formStateStream,
       this.eventStreams,
       externalStateStream,
+    ).pipe(
+      tap(derivedState => this.derivedState = derivedState),
     );
+
     this.initialValues = initialValues || {};
     this.fieldsSpec = fieldsSpec;
 
