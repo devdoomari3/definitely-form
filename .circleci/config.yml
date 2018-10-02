@@ -1,30 +1,4 @@
 jobs:
-  build:
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
-      - checkout
-      - run:
-          name: install-yarn-globally
-          command: 'sudo npm install -g yarn'
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-{{ .Branch }}
-            - yarn-packages-master
-            - yarn-packages-
-      - run:
-          name: Install Dependencies
-          command: yarn install
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules/
-      - run:
-          name: build
-          command: yarn build
   push_dist:
     docker:
       - image: circleci/node:8-browsers
@@ -55,13 +29,40 @@ jobs:
           name: pull-merge-build-forcepush
           command: |
             git checkout -b $'dist-'"$CIRCLE_BRANCH"
-            git pull origin $CIRCLE_BRANCH
-            git merge -X theirs --no-edit $CIRCLE_BRANCH
-            git add -f lib
-            mkdir -p ~/.git && git config user.email "devdoomari@gmail.com" && git config user.name "devdoomari.circleci"
-            git commit --allow-empty -m $'generated from:'"$CIRCLE_SHA1"$'\ntriggered by:'"$CIRCLE_USERNAME"$'\n[ci skip]'
-            git tag -a $'dist_'"$CIRCLE_BRANCH"'_'"$CIRCLE_BUILD_NUM" -m "."
+            ./.circleci/pullAndMerge.sh
             git push --set-upstream origin $'dist-'"$CIRCLE_BRANCH" --force --follow-tags
+  push_master:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - run:
+          name: install-yarn-globally
+          command: 'sudo npm install -g yarn'
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}
+            - yarn-packages-master
+            - yarn-packages-
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+      - run:
+          name: build
+          command: yarn build
+      - run:
+          name: pull-merge-build-forcepush
+          command: |
+            git checkout -b master | git checkout master
+            ./.circleci/pullAndMerge.sh
+            git push --set-upstream origin master --force --follow-tags
 
 workflows:
   version: 2
@@ -70,4 +71,10 @@ workflows:
       - push_dist:
           filters:
             branches:
-              ignore: /^dist*/
+              ignore:
+               - /^dist*/
+               - develop
+      - push_master:
+          filters:
+            branches:
+              only: develop

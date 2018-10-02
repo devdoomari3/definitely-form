@@ -33,8 +33,10 @@
     "rxjs-compat": "^6.3.2"
   },
   "scripts": {
-    "clean": "rimraf dist lib ts_compiled",
-    "build": "tsc --project tsconfig.lib.json",
+    "clean": "rimraf dist docs lib ts_compiled",
+    "build": "npm run build_lib && npm run build_doc",
+    "build_doc": "parcel build examples/index.html --public-url /definitely-form/ --out-dir docs",
+    "build_lib": "tsc --project tsconfig.lib.json",
     "dev": "parcel examples/index.html"
   },
   "dependencies": {},
