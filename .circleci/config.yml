@@ -39,7 +39,6 @@ jobs:
             else
               git checkout -b $'dist-'"$CIRCLE_BRANCH"
             fi
-            git checkout master
             mkdir -p ~/.git && git config user.email "devdoomari@gmail.com" && git config user.name "devdoomari.circleci"
             git merge -X theirs --no-edit $CIRCLE_BRANCH
             npm run clean && npm run build
