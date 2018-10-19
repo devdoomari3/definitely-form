@@ -39,7 +39,7 @@ export class RxJSStateManager <
 
   eventStreams: EventStreams<FormSpec>;
   derivedStateStream: Observable<DerivedState | null>;
-  // values?: {[key in keyof FormSpec]: ValueProperty<FormSpec[key] > };
+  formState?: FormState<FormSpec>;
   formStateStream: BehaviorSubject<FormState<FormSpec>>;
 
   constructor(args: {
@@ -62,7 +62,9 @@ export class RxJSStateManager <
       edited: {},
       values: {},
       parsedValues: {},
-    });
+    }).pipe(
+      tap(formState => this.formState = formState),
+    );
     this.derivedStateStream = toStreamValidator(
       this.formStateStream,
       this.eventStreams,
